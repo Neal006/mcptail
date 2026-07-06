@@ -32,11 +32,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "check": "biome check . && tsc --noEmit && vitest run --passWithNoTests",
+    "build": "tsup && vite build ui",
+    "check": "biome check . && npm run typecheck && vitest run --passWithNoTests",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p ui --noEmit",
     "test": "vitest run --passWithNoTests",
     "prepare": "simple-git-hooks"
   },
