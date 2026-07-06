@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
 import {
   type Call,
-  fetchModels,
   fetchSession,
   fetchSessions,
   postReplay,
@@ -19,31 +18,28 @@ export function App() {
   const [selected, setSelected] = useState<string | null>(null);
   const [detail, setDetail] = useState<SessionDetail | null>(null);
   const [call, setCall] = useState<Call | null>(null);
-  const [models, setModels] = useState<{ default: string; models: string[] } | null>(null);
-  const [model, setModel] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     fetchSessions().then((list) => {
       setSessions(list);
       if (list[0]) setSelected((cur) => cur ?? list[0].file);
     });
-    fetchModels().then(setModels);
   }, []);
 
   useEffect(() => {
     return subscribeLive((changedFile) => {
       fetchSessions().then(setSessions);
       setSelected((cur) => {
-        if (cur === changedFile) fetchSession(changedFile, model).then(setDetail);
+        if (cur === changedFile) fetchSession(changedFile).then(setDetail);
         return cur ?? changedFile;
       });
     });
-  }, [model]);
+  }, []);
 
   useEffect(() => {
-    if (selected) fetchSession(selected, model).then(setDetail);
+    if (selected) fetchSession(selected).then(setDetail);
     else setDetail(null);
-  }, [selected, model]);
+  }, [selected]);
 
   const errorCount = useMemo(() => detail?.calls.filter((c) => c.isError).length ?? 0, [detail]);
 
@@ -52,20 +48,6 @@ export function App() {
       <header>
         <span class="logo">mcptail</span>
         <span class="live-dot" title="live" />
-        <span class="spacer" />
-        {models && (
-          <select
-            value={model ?? models.default}
-            onChange={(e) => setModel((e.target as HTMLSelectElement).value)}
-            title="price tokens against this model"
-          >
-            {models.models.map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-          </select>
-        )}
       </header>
 
       <aside>
@@ -102,12 +84,7 @@ export function App() {
               <Tile value={String(detail.calls.length)} label="calls" />
               <Tile value={String(errorCount)} label="errors" err={errorCount > 0} />
               <Tile value={detail.totalTokens.toLocaleString()} label="est. tokens" />
-              <Tile
-                value={
-                  detail.estimatedCostUsd === null ? "—" : `$${detail.estimatedCostUsd.toFixed(4)}`
-                }
-                label={`est. cost (${detail.model})`}
-              />
+              <Tile value={String(detail.notificationCount)} label="notifications" />
             </div>
 
             <h2>Per tool</h2>

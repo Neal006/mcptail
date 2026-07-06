@@ -35,20 +35,13 @@ export interface SessionDetail {
   rawCount: number;
   stats: ToolStats[];
   totalTokens: number;
-  estimatedCostUsd: number | null;
-  model: string;
 }
 
 export const fetchSessions = (): Promise<SessionInfo[]> =>
   fetch("/api/sessions").then((r) => r.json());
 
-export const fetchSession = (file: string, model?: string): Promise<SessionDetail> =>
-  fetch(
-    `/api/session?file=${encodeURIComponent(file)}${model ? `&model=${encodeURIComponent(model)}` : ""}`,
-  ).then((r) => r.json());
-
-export const fetchModels = (): Promise<{ default: string; models: string[] }> =>
-  fetch("/api/models").then((r) => r.json());
+export const fetchSession = (file: string): Promise<SessionDetail> =>
+  fetch(`/api/session?file=${encodeURIComponent(file)}`).then((r) => r.json());
 
 export interface ReplayResponse {
   original: unknown;
