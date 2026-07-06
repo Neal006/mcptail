@@ -2,30 +2,15 @@ name: Release
 
 on:
   push:
-    branches: [main]
+    tags: ["v*"]
 
 permissions:
   contents: write
-  pull-requests: write
+  id-token: write
 
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-    steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          release-type: node
-
   publish:
-    needs: release-please
-    if: needs.release-please.outputs.release_created == 'true'
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,7 +18,11 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
       - run: npm ci
+      - run: npm run check
       - run: npm run build
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: gh release create "$GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
