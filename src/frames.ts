@@ -1,5 +1,31 @@
 const NEWLINE = 0x0a;
 
+/** A parsed JSON-RPC message; kept loose on purpose — we record, never validate. */
+export type JsonRpcMessage = { [key: string]: unknown };
+
+export type Frame =
+  | { kind: "json"; msg: JsonRpcMessage }
+  | { kind: "raw"; raw: string }
+  | { kind: "blank" };
+
+/**
+ * MCP stdio framing is newline-delimited JSON. Anything that isn't valid JSON
+ * is preserved as a raw frame — recording must never assume well-behaved servers.
+ */
+export function parseFrame(line: string): Frame {
+  const text = line.endsWith("\r") ? line.slice(0, -1) : line;
+  if (text.trim() === "") return { kind: "blank" };
+  try {
+    const msg = JSON.parse(text);
+    if (typeof msg === "object" && msg !== null && !Array.isArray(msg)) {
+      return { kind: "json", msg };
+    }
+    return { kind: "raw", raw: text };
+  } catch {
+    return { kind: "raw", raw: text };
+  }
+}
+
 /**
  * Splits a byte stream into complete lines. Accumulates raw bytes so a
  * multi-byte UTF-8 character split across chunks never corrupts output.
