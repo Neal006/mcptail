@@ -1,0 +1,42 @@
+{
+  "name": "mcptap",
+  "version": "0.1.0",
+  "description": "See what your AI agent is actually doing. Passive traffic capture, token cost attribution, and replay for MCP servers — one command.",
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "observability",
+    "debugging",
+    "proxy",
+    "ai-agents",
+    "claude",
+    "cursor",
+    "developer-tools"
+  ],
+  "homepage": "https://github.com/Neal006/mcptap",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neal006/mcptap.git"
+  },
+  "bugs": "https://github.com/Neal006/mcptap/issues",
+  "license": "MIT",
+  "author": "Neal006",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "mcptap": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "check": "biome check . && tsc --noEmit && vitest run --passWithNoTests",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  }
+}
