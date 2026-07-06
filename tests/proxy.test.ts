@@ -24,12 +24,12 @@ process.stdin.on("data", (d) => {
 let home: string;
 
 beforeEach(() => {
-  home = mkdtempSync(join(tmpdir(), "mcptap-proxy-"));
-  process.env.MCPTAP_HOME = home;
+  home = mkdtempSync(join(tmpdir(), "mcptail-proxy-"));
+  process.env.MCPTAIL_HOME = home;
 });
 
 afterEach(() => {
-  delete process.env.MCPTAP_HOME;
+  delete process.env.MCPTAIL_HOME;
   rmSync(home, { recursive: true, force: true });
 });
 
@@ -112,7 +112,7 @@ describe("runProxy", () => {
   });
 
   it("keeps traffic flowing when recording is disabled", async () => {
-    process.env.MCPTAP_HOME = join(home, "\0invalid");
+    process.env.MCPTAIL_HOME = join(home, "\0invalid");
     const input = new PassThrough();
     const output = new PassThrough();
     const exit = runProxy(["node", "-e", ECHO_SERVER], { server: "echo", input, output });

@@ -6,7 +6,7 @@ import {
   aggregate,
   correlate,
   listSessions,
-  mcptapHome,
+  mcptailHome,
   readEvents,
   SessionWriter,
   sessionsRoot,
@@ -16,12 +16,12 @@ import {
 let home: string;
 
 beforeEach(() => {
-  home = mkdtempSync(join(tmpdir(), "mcptap-test-"));
-  process.env.MCPTAP_HOME = home;
+  home = mkdtempSync(join(tmpdir(), "mcptail-test-"));
+  process.env.MCPTAIL_HOME = home;
 });
 
 afterEach(() => {
-  delete process.env.MCPTAP_HOME;
+  delete process.env.MCPTAIL_HOME;
   rmSync(home, { recursive: true, force: true });
 });
 
@@ -29,8 +29,8 @@ const meta = { server: "github", command: ["npx", "gh-mcp"], startedAt: 17517600
 const metaDate = new Date(meta.startedAt).toISOString().slice(0, 10);
 
 describe("SessionWriter", () => {
-  it("respects MCPTAP_HOME override", () => {
-    expect(mcptapHome()).toBe(home);
+  it("respects MCPTAIL_HOME override", () => {
+    expect(mcptailHome()).toBe(home);
     expect(sessionsRoot()).toBe(join(home, "sessions"));
   });
 
@@ -60,7 +60,7 @@ describe("SessionWriter", () => {
   });
 
   it("disables itself instead of throwing when the disk path is unwritable", () => {
-    process.env.MCPTAP_HOME = join(home, "\0invalid");
+    process.env.MCPTAIL_HOME = join(home, "\0invalid");
     expect(() => {
       const w = new SessionWriter(meta);
       w.write({ ts: 1, dir: "c2s", frame: { kind: "blank" } });

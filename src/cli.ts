@@ -9,13 +9,13 @@ import { type FileResult, initTaps, removeTaps, tapStatus } from "./taps.js";
 const program = new Command();
 
 program
-  .name("mcptap")
+  .name("mcptail")
   .description("See what your AI agent is actually doing — passive traffic capture for MCP.")
   .version(pkg.version);
 
 program
   .command("run")
-  .description("Run an MCP server through the tap (what `mcptap init` injects into configs)")
+  .description("Run an MCP server through the tap (what `mcptail init` injects into configs)")
   .option("--label <name>", "display name for the recorded session")
   .argument("<command...>", "the original server command, after --")
   .allowUnknownOption()
@@ -30,7 +30,7 @@ program
     const results = initTaps(process.cwd());
     printResults(results, "wrapped");
     if (results.some((r) => r.changed.length)) {
-      console.log("\nRestart your MCP client, use it normally, then: npx mcptap ui");
+      console.log("\nRestart your MCP client, use it normally, then: npx mcptail ui");
     } else if (!results.length) {
       console.log("No MCP client configs found here or in your home directory.");
     }
@@ -52,7 +52,8 @@ program
     for (const s of statuses) {
       console.log(`${s.client}  ${s.path}`);
       if (s.tapped.length) console.log(`  tapped:   ${s.tapped.join(", ")}`);
-      if (s.untapped.length) console.log(`  untapped: ${s.untapped.join(", ")} (run: mcptap init)`);
+      if (s.untapped.length)
+        console.log(`  untapped: ${s.untapped.join(", ")} (run: mcptail init)`);
       if (!s.tapped.length && !s.untapped.length) console.log("  no stdio servers configured");
     }
     const sessions = listSessions();
@@ -71,7 +72,7 @@ program
   .option("--port <port>", "port to listen on", "4747")
   .action(async (opts: { port: string }) => {
     const url = await startDashboard(Number(opts.port));
-    console.log(`mcptap dashboard: ${url}`);
+    console.log(`mcptail dashboard: ${url}`);
   });
 
 function printResults(results: FileResult[], verb: string): void {
@@ -89,6 +90,6 @@ function printResults(results: FileResult[], verb: string): void {
 }
 
 program.parseAsync().catch((err) => {
-  console.error(`mcptap: ${err instanceof Error ? err.message : String(err)}`);
+  console.error(`mcptail: ${err instanceof Error ? err.message : String(err)}`);
   process.exitCode = 1;
 });

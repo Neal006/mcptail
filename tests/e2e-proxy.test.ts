@@ -22,7 +22,7 @@ let home: string;
 
 beforeAll(() => {
   if (!existsSync(cli)) execSync("npm run build", { cwd: root, stdio: "ignore" });
-  home = mkdtempSync(join(tmpdir(), "mcptap-e2e-"));
+  home = mkdtempSync(join(tmpdir(), "mcptail-e2e-"));
 });
 
 afterAll(() => {
@@ -34,9 +34,9 @@ describe("e2e: real MCP session through the tap", () => {
     const transport = new StdioClientTransport({
       command: process.execPath,
       args: [cli, "run", "--label", "everything", "--", process.execPath, everything],
-      env: { ...process.env, MCPTAP_HOME: home } as Record<string, string>,
+      env: { ...process.env, MCPTAIL_HOME: home } as Record<string, string>,
     });
-    const client = new Client({ name: "mcptap-e2e", version: "0.0.0" });
+    const client = new Client({ name: "mcptail-e2e", version: "0.0.0" });
     await client.connect(transport);
 
     const tools = await client.listTools();
@@ -53,7 +53,7 @@ describe("e2e: real MCP session through the tap", () => {
     // give the wrapper a beat to flush its final appends after transport close
     await new Promise((r) => setTimeout(r, 500));
 
-    process.env.MCPTAP_HOME = home;
+    process.env.MCPTAIL_HOME = home;
     try {
       const sessions = listSessions();
       expect(sessions).toHaveLength(1);
@@ -72,7 +72,7 @@ describe("e2e: real MCP session through the tap", () => {
       const badCall = calls.find((c) => c.toolName === "definitely-not-a-tool");
       expect(badCall?.isError).toBe(true);
     } finally {
-      delete process.env.MCPTAP_HOME;
+      delete process.env.MCPTAIL_HOME;
     }
   });
 });

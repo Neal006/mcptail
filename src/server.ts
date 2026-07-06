@@ -170,7 +170,7 @@ function serveStatic(pathname: string, res: ServerResponse): void {
     return;
   }
   res.writeHead(200, { "content-type": MIME[".html"] as string });
-  res.end("<h1>mcptap</h1><p>Dashboard UI not built. API is live at /api/sessions.</p>");
+  res.end("<h1>mcptail</h1><p>Dashboard UI not built. API is live at /api/sessions.</p>");
 }
 
 export function startDashboard(port: number): Promise<string> {

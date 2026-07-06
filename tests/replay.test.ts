@@ -20,8 +20,8 @@ let server: Server;
 let base: string;
 
 beforeAll(async () => {
-  home = mkdtempSync(join(tmpdir(), "mcptap-replay-"));
-  process.env.MCPTAP_HOME = home;
+  home = mkdtempSync(join(tmpdir(), "mcptail-replay-"));
+  process.env.MCPTAIL_HOME = home;
   server = createDashboardServer();
   await new Promise<void>((r) => server.listen(0, "127.0.0.1", r));
   const address = server.address();
@@ -31,7 +31,7 @@ beforeAll(async () => {
 afterAll(async () => {
   server.closeAllConnections();
   await new Promise((r) => server.close(r));
-  delete process.env.MCPTAP_HOME;
+  delete process.env.MCPTAIL_HOME;
   rmSync(home, { recursive: true, force: true });
 });
 

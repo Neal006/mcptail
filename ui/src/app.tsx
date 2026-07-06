@@ -50,7 +50,7 @@ export function App() {
   return (
     <div class="layout">
       <header>
-        <span class="logo">mcptap</span>
+        <span class="logo">mcptail</span>
         <span class="live-dot" title="live" />
         <span class="spacer" />
         {models && (
@@ -90,7 +90,7 @@ export function App() {
           <div class="empty">
             No sessions yet.
             <br />
-            Run <code>npx mcptap init</code>, then use your MCP client.
+            Run <code>npx mcptail init</code>, then use your MCP client.
           </div>
         )}
       </aside>

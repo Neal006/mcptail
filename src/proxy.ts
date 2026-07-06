@@ -20,7 +20,7 @@ export function runProxy(command: string[], opts: ProxyOptions = {}): Promise<nu
   return new Promise((resolve) => {
     const [cmd, ...args] = command;
     if (!cmd) {
-      process.stderr.write("[mcptap] usage: mcptap run -- <command> [args...]\n");
+      process.stderr.write("[mcptail] usage: mcptail run -- <command> [args...]\n");
       resolve(2);
       return;
     }
@@ -29,7 +29,7 @@ export function runProxy(command: string[], opts: ProxyOptions = {}): Promise<nu
 
     const child = spawn(cmd, args, { stdio: ["pipe", "pipe", "inherit"] });
     child.on("error", (err) => {
-      process.stderr.write(`[mcptap] failed to start ${cmd}: ${String(err)}\n`);
+      process.stderr.write(`[mcptail] failed to start ${cmd}: ${String(err)}\n`);
       resolve(127);
     });
 
@@ -51,7 +51,7 @@ export function runProxy(command: string[], opts: ProxyOptions = {}): Promise<nu
         }
       } catch (err) {
         tapBroken = true;
-        process.stderr.write(`[mcptap] tap disabled, continuing as plain pipe: ${String(err)}\n`);
+        process.stderr.write(`[mcptail] tap disabled, continuing as plain pipe: ${String(err)}\n`);
       }
     };
 

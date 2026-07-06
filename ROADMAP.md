@@ -9,11 +9,11 @@ tracking issue; comment there before starting so work doesn't collide.
 - [ ] Streamable HTTP / SSE transport capture
 - [ ] Windsurf, Zed, and Cline client adapters
 - [ ] Search & filter in the dashboard timeline
-- [ ] Session pruning: `mcptap clear` + max-size rotation
+- [ ] Session pruning: `mcptail clear` + max-size rotation
 
 ## Later
 
-- [ ] Export a captured call as a regression test (`mcptap test`)
+- [ ] Export a captured call as a regression test (`mcptail test`)
 - [ ] HAR export for sharing sessions
 - [ ] OpenTelemetry exporter
 - [ ] Exact tokenizer adapters (opt-in) instead of chars/4
@@ -22,5 +22,5 @@ tracking issue; comment there before starting so work doesn't collide.
 
 ## Non-goals
 
-- Cloud anything. mcptap stays local-first with no account.
+- Cloud anything. mcptail stays local-first with no account.
 - Modifying traffic. It's a tap, not a middleware framework.

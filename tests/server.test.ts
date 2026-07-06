@@ -11,8 +11,8 @@ let server: Server;
 let base: string;
 
 beforeEach(async () => {
-  home = mkdtempSync(join(tmpdir(), "mcptap-srv-"));
-  process.env.MCPTAP_HOME = home;
+  home = mkdtempSync(join(tmpdir(), "mcptail-srv-"));
+  process.env.MCPTAIL_HOME = home;
   server = createDashboardServer();
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   const address = server.address();
@@ -22,7 +22,7 @@ beforeEach(async () => {
 afterEach(async () => {
   server.closeAllConnections();
   await new Promise((resolve) => server.close(resolve));
-  delete process.env.MCPTAP_HOME;
+  delete process.env.MCPTAIL_HOME;
   rmSync(home, { recursive: true, force: true });
 });
 
@@ -85,7 +85,7 @@ describe("dashboard API", () => {
   it("serves a fallback page when the UI is not built", async () => {
     const res = await fetch(`${base}/`);
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("mcptap");
+    expect(await res.text()).toContain("mcptail");
   });
 
   it("exposes the pricing model list", async () => {

@@ -24,7 +24,7 @@ export async function replayCall(
     return { ok: false, error: "initialize runs implicitly on every replay" };
   }
   const transport = new StdioClientTransport({ command: cmd, args });
-  const client = new Client({ name: "mcptap-replay", version: "0.0.0" });
+  const client = new Client({ name: "mcptail-replay", version: "0.0.0" });
   try {
     await client.connect(transport);
     const request = { method, params } as Parameters<Client["request"]>[0];

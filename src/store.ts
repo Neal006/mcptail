@@ -18,12 +18,12 @@ export interface TapEvent {
   frame: Frame;
 }
 
-export function mcptapHome(): string {
-  return process.env.MCPTAP_HOME ?? join(homedir(), ".mcptap");
+export function mcptailHome(): string {
+  return process.env.MCPTAIL_HOME ?? join(homedir(), ".mcptail");
 }
 
 export function sessionsRoot(): string {
-  return join(mcptapHome(), "sessions");
+  return join(mcptailHome(), "sessions");
 }
 
 function dateDir(ts: number): string {
@@ -65,7 +65,7 @@ export class SessionWriter {
   private disable(err: unknown): void {
     if (this.broken) return;
     this.broken = true;
-    process.stderr.write(`[mcptap] recording disabled: ${String(err)}\n`);
+    process.stderr.write(`[mcptail] recording disabled: ${String(err)}\n`);
   }
 }
 

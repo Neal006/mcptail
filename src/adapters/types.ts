@@ -2,7 +2,7 @@ import { homedir } from "node:os";
 
 /** Overridable so tests never touch the real home directory configs. */
 export function userHome(): string {
-  return process.env.MCPTAP_USER_HOME ?? homedir();
+  return process.env.MCPTAIL_USER_HOME ?? homedir();
 }
 
 export interface ConfigCandidate {

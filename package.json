@@ -1,5 +1,5 @@
 {
-  "name": "mcptap",
+  "name": "mcptail",
   "version": "0.1.0",
   "description": "See what your AI agent is actually doing. Passive traffic capture, token cost attribution, and replay for MCP servers — one command.",
   "keywords": [
@@ -13,12 +13,12 @@
     "cursor",
     "developer-tools"
   ],
-  "homepage": "https://github.com/Neal006/mcptap",
+  "homepage": "https://github.com/Neal006/mcptail",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Neal006/mcptap.git"
+    "url": "git+https://github.com/Neal006/mcptail.git"
   },
-  "bugs": "https://github.com/Neal006/mcptap/issues",
+  "bugs": "https://github.com/Neal006/mcptail/issues",
   "license": "MIT",
   "author": "Neal006",
   "type": "module",
@@ -26,7 +26,7 @@
     "node": ">=20"
   },
   "bin": {
-    "mcptap": "dist/cli.js"
+    "mcptail": "dist/cli.js"
   },
   "files": [
     "dist"

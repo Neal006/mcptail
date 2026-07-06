@@ -8,13 +8,13 @@ let cwd: string;
 let home: string;
 
 beforeEach(() => {
-  cwd = mkdtempSync(join(tmpdir(), "mcptap-cwd-"));
-  home = mkdtempSync(join(tmpdir(), "mcptap-userhome-"));
-  process.env.MCPTAP_USER_HOME = home;
+  cwd = mkdtempSync(join(tmpdir(), "mcptail-cwd-"));
+  home = mkdtempSync(join(tmpdir(), "mcptail-userhome-"));
+  process.env.MCPTAIL_USER_HOME = home;
 });
 
 afterEach(() => {
-  delete process.env.MCPTAP_USER_HOME;
+  delete process.env.MCPTAIL_USER_HOME;
   rmSync(cwd, { recursive: true, force: true });
   rmSync(home, { recursive: true, force: true });
 });
@@ -33,7 +33,7 @@ describe("wrapEntry / unwrapEntry", () => {
     expect(entry.command).toBe("npx");
     expect(entry.args).toEqual([
       "-y",
-      "mcptap",
+      "mcptail",
       "run",
       "--label",
       "firecrawl",
@@ -74,8 +74,8 @@ describe("initTaps / removeTaps", () => {
     expect(results.flatMap((r) => r.changed).sort()).toEqual(["db", "firecrawl", "github"]);
 
     const written = JSON.parse(readFileSync(join(cwd, ".mcp.json"), "utf8"));
-    expect(written.mcpServers.firecrawl.args).toContain("mcptap");
-    expect(readdirSync(cwd).some((f) => f.startsWith(".mcp.json.mcptap-backup-"))).toBe(true);
+    expect(written.mcpServers.firecrawl.args).toContain("mcptail");
+    expect(readdirSync(cwd).some((f) => f.startsWith(".mcp.json.mcptail-backup-"))).toBe(true);
   });
 
   it("remove restores the original config content", () => {

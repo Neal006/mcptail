@@ -7,13 +7,13 @@ interface ServerEntry {
   [key: string]: unknown;
 }
 
-const WRAP_PREFIX = ["-y", "mcptap", "run", "--label"];
+const WRAP_PREFIX = ["-y", "mcptail", "run", "--label"];
 
 export function isWrapped(entry: ServerEntry): boolean {
   return (
     entry.command === "npx" &&
     Array.isArray(entry.args) &&
-    entry.args[1] === "mcptap" &&
+    entry.args[1] === "mcptail" &&
     entry.args[2] === "run"
   );
 }
@@ -74,7 +74,7 @@ function applyToFile(
   }
 
   if (result.changed.length) {
-    if (backup) copyFileSync(path, `${path}.mcptap-backup-${Date.now()}`);
+    if (backup) copyFileSync(path, `${path}.mcptail-backup-${Date.now()}`);
     writeFileSync(path, `${JSON.stringify(config, null, 2)}\n`);
   }
   return result;

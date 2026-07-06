@@ -1,4 +1,4 @@
-# Contributing to mcptap
+# Contributing to mcptail
 
 Thanks for helping make MCP traffic visible. PRs of every size are welcome —
 the fastest reviews go to small, focused changes.
@@ -6,8 +6,8 @@ the fastest reviews go to small, focused changes.
 ## Dev setup
 
 ```bash
-git clone https://github.com/Neal006/mcptap
-cd mcptap
+git clone https://github.com/Neal006/mcptail
+cd mcptail
 npm install        # also installs the pre-commit hook
 npm run check      # lint + typecheck + tests — must pass before every commit
 npm run build      # dist/cli.js + dist/ui
@@ -26,7 +26,7 @@ UI development with hot reload: `node dist/cli.js ui` (API on :4747), then
 
 ## Adding a client adapter
 
-The most-wanted contribution. An adapter tells mcptap where a client keeps its
+The most-wanted contribution. An adapter tells mcptail where a client keeps its
 MCP config. It's one small file:
 
 ```ts
@@ -56,7 +56,7 @@ page in your PR description.
 - **Conventional commits**: `feat(scope): ...`, `fix(scope): ...`, `test(scope): ...` — release-please builds the changelog from these.
 - **Tests ride with the code**: a module change without its test change is an incomplete PR.
 - **The proxy never breaks a session**: anything on the traffic path must degrade to a plain pipe on failure, never throw.
-- **Recording is passive**: mcptap must never mutate, reorder, or delay traffic.
+- **Recording is passive**: mcptail must never mutate, reorder, or delay traffic.
 - `npm run check` is the same gate CI runs — if it passes locally, CI passes.
 
 ## Reporting bugs
