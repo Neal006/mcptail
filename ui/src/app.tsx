@@ -167,7 +167,7 @@ export function App() {
                 {!filteredCalls.length && (
                   <tr>
                     <td class="empty-row" colSpan={4}>
-                      no matching calls
+                      {detail.calls.length ? "no matching calls" : "no calls yet"}
                     </td>
                   </tr>
                 )}
